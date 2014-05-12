@@ -1,8 +1,8 @@
 ### How to make this work with pyGrooveshark
 
-pyGrooveshark not only pull the playlists/collections ... but also parse it. Since we are just interested in getting the raw json format we can bypass the parsing.
+pyGrooveshark not only pulls the playlists/collections ... but also parses it. Since we are just interested in getting the raw json format we can bypass the parsing.
 
-You can do this by modifying this : 
+You can do this by modifying this: 
 
     return self._parse_playlist(playlist)
     
