@@ -29,7 +29,7 @@ for id_ in xrange(max(1,idStart),idStop+1):
 				json.dump(query, stream)
 			print "\tPlaylist " + str(id_) + " saved as " + jsonPath
 			count += 1
-	except _ :
+	except :
 		time.sleep(60)
 
 print str(count) + " have been pulled in " + outPath
