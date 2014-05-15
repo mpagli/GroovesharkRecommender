@@ -5,6 +5,7 @@ import sys
 import json
 import time
 from grooveshark import Client
+from multiprocessing.dummy import Pool as ThreadPool
 
 client = Client()
 client.init()
@@ -20,7 +21,7 @@ outPath = "./playlists/"
 
 count = 0 	#total number of playlists saved
 
-for id_ in xrange(max(1,idStart),idStop+1):
+def getPlaylistFromId(id_):
 	try :
 		query = client.playlist(str(id_))
 		if id_ == query['PlaylistID']: 	#query['PlaylistID']=0 when the playlist doesn't exists 
@@ -28,9 +29,16 @@ for id_ in xrange(max(1,idStart),idStop+1):
 			with open(jsonPath,'w') as stream:
 				json.dump(query, stream)
 			print "\tPlaylist " + str(id_) + " saved as " + jsonPath
-			count += 1
+			return 1
+		else:
+			return 0
 	except :
-		time.sleep(60)
+		return 0	
 
-print str(count) + " have been pulled in " + outPath
+pool = ThreadPool(25)
+results = pool.map(getPlaylistFromId, range(max(1,idStart),idStop+1))
+pool.close()
+pool.join()
+
+print str(sum(results)) + " have been pulled in " + outPath
 
