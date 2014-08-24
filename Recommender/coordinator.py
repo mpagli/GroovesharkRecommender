@@ -48,6 +48,8 @@ if __name__ == "__main__":
 		print invLexicon[item]
 	recommender = cf.collaborativeFiltering(processedUV,lexicon) #create sparse rating matrix
 	recommendation = recommender.getFullRecommendationVector(currentUser,'jaccard')
+	for item in currentUser:	#we are not interested in recommending already known artists
+		recommendation[item] = 0.
 
 	topK = np.argsort(recommendation)[-10:] #extract the top K recommendation
 	print "\n################ Recommendation:\n"
