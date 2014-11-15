@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
 import numpy as np
-from rsvd import RSVD, rating_t
+from rsvd import RSVD
 import json
 import os
 import random as rnd 
 import sys
+import math
 
 def formatData(corpus,lexicon,playlists_LUT,artists_LUT):
 	"""return a numpy record array from the original corpus, lexicon and maping LUT"""
@@ -18,15 +19,16 @@ def formatData(corpus,lexicon,playlists_LUT,artists_LUT):
 				acc[artistId] += 1
 			else:
 				acc[artistId] =  1
+		m = np.mean(acc.values())
 		for artistId,counts in acc.items():
-			outCorpus.append((artists_LUT[artistId],playlists_LUT[playListId],counts))
+			outCorpus.append((artists_LUT[artistId],playlists_LUT[playListId],float(counts)/math.sqrt(sum([x*x for x in acc.values()]))))
 	return outCorpus#np.recarray(outCorpus,dtype=[('artistId', uint16),('playListId', uint32),,('rating':float)])
 
 def splitDataset(corpus):
 	"""from a list of tuples, return 3 chunk: training/validation and test"""
 	Idx = range(len(corpus))
 	rnd.shuffle(Idx)
-	trainStop = int(len(corpus)*0.70)
+	trainStop = int(len(corpus)*0.66)
 	validStop = int(len(corpus)*0.95)
 	trainIdx = Idx[:trainStop]
 	validIdx = Idx[trainStop:validStop]
@@ -84,7 +86,7 @@ if __name__ == "__main__":
 		LEXICON = json.load(jsonStream)
 	print "ok"
 
-	CORPUS = removeSmallPlaylists(CORPUS,LEXICON,threshold_artistCount=20,threshold_artistPop=300)
+	CORPUS = removeSmallPlaylists(CORPUS,LEXICON,threshold_artistCount=15,threshold_artistPop=300)
 
 	### FORMATING THE DATA AS TUPLES: (artistId,playlistId,count)
 	print "\nFormating the dataset ..."
@@ -106,6 +108,9 @@ if __name__ == "__main__":
 
 	if not os.path.isfile(ARTISTS_LUT_PATH): 
 		print "\nCreating ARTISTS_LUT ...",
+
+		fstream = open("LUT.txt",'w')
+
 		sys.stdout.flush()
 		ARTISTS_LUT   = {}
 		INV_ARTISTS_LUT = {}
@@ -114,7 +119,11 @@ if __name__ == "__main__":
 				artistId = LEXICON["songs"][songId]["artistId"]
 				if artistId not in ARTISTS_LUT:
 					ARTISTS_LUT[artistId] = len(ARTISTS_LUT)+1
-					INV_ARTISTS_LUT[len(ARTISTS_LUT)+1] = artistId
+					try:
+						fstream.write(LEXICON["artists"][artistId]["name"]+": "+str(ARTISTS_LUT[artistId])+"\n")
+					except:
+						pass
+					INV_ARTISTS_LUT[len(ARTISTS_LUT)] = artistId
 		print "ok"
 		with open(ARTISTS_LUT_PATH, 'w') as outfile:
   			json.dump(ARTISTS_LUT, outfile)
@@ -143,6 +152,5 @@ if __name__ == "__main__":
                   maxEpochs=100,minImprovement=0.000001,\
                   learnRate=0.001,regularization=0.011,\
                   randomize=False, randomNoise=0.005)"""
-	model = RSVD.train(25,trainSet,(len(ARTISTS_LUT),len(PLAYLISTS_LUT)),validSet,learnRate=0.00001,regularization=0.001,minImprovement=0.0000001,maxEpochs=10000)
-
-
+	model = RSVD.train(10,trainSet,(len(ARTISTS_LUT),len(PLAYLISTS_LUT)),validSet,learnRate=0.0001,regularization=0.001,minImprovement=0.0000001,maxEpochs=10000)
+	model.save("./")
