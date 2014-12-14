@@ -1,6 +1,6 @@
 ### Neighbor Based (NB) methods
 
-NB methods consists in generating a recommendation as a weighted sum of playlists. The weights are most of the time expressed as a similarity function between two users. In our case we implemented NB based method using the Jaccard and cosine similarity functions. The dataset we are using is made of 225413 playlists representing a total of 18729 artists.  
+NB methods consists in generating a recommendation as a weighted sum of playlists. The weights are most of the time a  measure of similarity between two users. In our case we have implemented a NB based recommender using the Jaccard and cosine similarity functions. The dataset we are using is made of 225413 playlists representing a total of 18729 artists.  
 
 
 #### Jaccard similarity
@@ -44,7 +44,7 @@ In less than 4 seconds we got the following result:
 		Muse  -> score: 45.1682646791
 		Avenged Sevenfold  -> score: 44.6333900434
 
-The prediction make sense but we are loosing a lot of information by not taking into account the counts for each artists.
+The prediction make sense but we are loosing a lot of information by not taking into account the count for each artist.
 
 Another query:
 
