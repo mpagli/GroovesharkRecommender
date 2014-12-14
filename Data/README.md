@@ -18,4 +18,4 @@ Histogram of the number of unique artists per playlist:
 
 First observation that is not really a surprise, a huge part of the playlists contain one artist only. This means that many playlists will have to be dropped later on. The second observation is that many artists are referenced less than 50 times in the whole corpus!!! 
 
-Since grooveshark allows its users to upload content there are a lot of duplicates, the dataset is extremely noisy. To remove some of the noise we filter all the artists with a popularity inferior to a certain threshold. Doing so leaves us with a much smaller dataset than the original one. It also remove the precious correlations from the dataset. 
+Since grooveshark allows its users to upload content, there are a lot of duplicates, the dataset is extremely noisy. To remove some of the noise we filter all the artists with a popularity inferior to a certain threshold. Doing so leaves us with a much smaller dataset than the original one. It also remove some precious correlations from the dataset. 
