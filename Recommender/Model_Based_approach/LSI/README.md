@@ -4,7 +4,7 @@
 
 The idea is exactly the same as for the matrix factorization (MF) method except that the assumption on the data is different. With MF we consider that a lot of values are unknown to us, here we have all the data. When a user creates a playlist, the artists not included are as important as the artists included. When we tried to generate a PQ approximation of our data using gradient descent on the non-zeros values only, we were in fact omitting a lot of essential discriminative information. Trying to learn a model of our playlist considering only artists that are supposed to go well together is bound to fail, since we are only giving positive correlation measures and will end up with a system stating that everything correlates with everything. The really valuable information contained in the playlists is what is inside the playlist and what isn't. Latent Semantic Indexing consist in a truncated SVD with no unknown values. It is mainly used in natural language processing, as a topic modeling method.
 
-Since we know all the values of the matrix we are trying to approximate we can use any standard algorithm to compute the SVD decomposition. Our dataset being too big for the standard np.linalg.svd method, we used (gensim)[http://radimrehurek.com/gensim/index.html]. 
+Since we know all the values of the matrix we are trying to approximate we can use any standard algorithm to compute the SVD decomposition. Our dataset being too big for the standard np.linalg.svd method, we used [gensim](http://radimrehurek.com/gensim/index.html). 
 
 When a knew document d comes in, we can get his distribution of topics by projecting it on the item matrix Q:
 
