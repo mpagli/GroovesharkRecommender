@@ -1,5 +1,5 @@
 GroovesharkRecommender
 ======================
 
-By analyzing the playlists, collections, last-listens lists and broadcasts, we aim to develop a recommendation engine for a user providing an existing playlist, album, song or user id.
+From a dataset of playlists, we investigated different methods to recommend artists. The dataset coming from grooveshark. Methods that have been tried range from neighbors based methods to matrix factorization and latent dirichlet allocation.
 
