@@ -9,7 +9,7 @@ LDA is a method mainly used for topic modeling. It is a generative model. The as
 
 The problem is that we initially only have the documents, not the phis and thetas of our model. Two main methods exist to perform the inference, variational inference and gibbs sampling. LDA is not the only generative probabilistic topic modeling method. The great advantage of LDA among others yields in the dirichlet priors allowing us to easily infer a topic mixtures for new documents.
 
-In our setup, each playlist is a document, a word is an artist index. We used two libraries implementing LDA: [gensim](http://radimrehurek.com/gensim/models/ldamulticore.html#module-gensim.models.ldamulticore) (python) and [Mallet](http://mallet.cs.umass.edu/). Gensim uses variational inference, Mallet uses gibbs sampling. These two methods aim to estimate the same thing yet I suspect (based on my own experience) gibbs sampling to do a better job when the documents are small or when we only have a small dataset. 
+In our setup, each playlist is a document, a word is an artist index. We used two libraries implementing LDA: [gensim](http://radimrehurek.com/gensim/models/ldamulticore.html#module-gensim.models.ldamulticore) (python) and [Mallet](http://mallet.cs.umass.edu/) (Java). Gensim uses variational inference, Mallet uses collapsed gibbs sampling. These two methods aim to estimate the same thing, however mallet by default uses methods to optimize the values of the hypermparameters alpha and beta, which greatly improve the quality of the results.
 
 #### Gensim   
 
