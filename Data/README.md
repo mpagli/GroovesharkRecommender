@@ -1,4 +1,4 @@
-###About the data format
+### About the data format
 
 Two ways have been considered to handle the data:
 
@@ -6,7 +6,7 @@ Two ways have been considered to handle the data:
 
 * Preprocess the data and save everything in a compact JSON file: removing the unnecessary attributes, avoiding redundancies as well as removing playlists that are too short to contain relevant information allows to generate a new dataset. This dataset (around 600Mb) can be loaded in main memory. This dataset is used by the model-based approach.  
 
-###Some stats
+### Some stats
 
 The artist popularity is the number of playlists in which the artist is referenced:
 
